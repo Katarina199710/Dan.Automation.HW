@@ -29,7 +29,7 @@ public class DragNDrop {
         actions.dragAndDrop(driver.findElement(Locators.bankElement), driver.findElement(Locators.thirdDropAria)).perform();
         actions.dragAndDrop(driver.findElement(Locators.salesElement), driver.findElement(Locators.forthDropAria)).perform();
         driver.findElement(By.linkText("Perfect!")).click();
-        System.out.println(driver.findElement(By.linkText("Perfect!")).getText());;
+        System.out.println(driver.findElement(By.linkText("Perfect!")).getText());
         driver.quit();
     }
 }
