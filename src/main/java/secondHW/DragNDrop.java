@@ -20,12 +20,12 @@ public class DragNDrop {
     public static void main(String[] args) throws InterruptedException {
         WebDriver driver = DriverInit.setUpDriver();
         driver.get(Urls.guru99);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         Actions actions = new Actions(driver);
         actions.dragAndDrop(driver.findElement(Locators.firstDragElement), driver.findElement(Locators.firstDropAria)).perform();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         actions.dragAndDrop(driver.findElement(Locators.secondDragElement), driver.findElement(Locators.secondDropAria)).perform();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         actions.dragAndDrop(driver.findElement(Locators.bankElement), driver.findElement(Locators.thirdDropAria)).perform();
         actions.dragAndDrop(driver.findElement(Locators.salesElement), driver.findElement(Locators.forthDropAria)).perform();
         driver.findElement(By.linkText("Perfect!")).click();
