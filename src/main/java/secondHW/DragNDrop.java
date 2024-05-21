@@ -7,7 +7,7 @@ import utils.DriverInit;
 import utils.Urls;
 
 public class DragNDrop {
-    private static class Locators{
+    private static class Locators {
         private static final By firstDragElement = By.xpath("//li[@id='fourth'][1]");
         private static final By secondDragElement = By.xpath("//li[@id='fourth'][2]");
         private static final By bankElement = By.id("credit2");
@@ -17,6 +17,7 @@ public class DragNDrop {
         private static final By thirdDropAria = By.id("bank");
         private static final By forthDropAria = By.id("loan");
     }
+
     public static void main(String[] args) throws InterruptedException {
         WebDriver driver = DriverInit.setUpDriver();
         driver.get(Urls.guru99);
