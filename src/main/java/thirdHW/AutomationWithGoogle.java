@@ -1,9 +1,6 @@
 package thirdHW;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WindowType;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -39,8 +36,12 @@ public class AutomationWithGoogle {
         private static final By inputPassword = By.id("Password");
         private static final By confirmPassword = By.id("ConfirmPassword");
         private static final By validationPassword = By.xpath("//span[@for='ConfirmPassword']");
-
+        private static final By alertButton = By.id("alertBox");
+        private static final By outputField = By.id("output");
+        private static final By confirmButton = By.id("confirmBox");
+        private static final By promptButton = By.id("promptBox");
     }
+    //Хотела написать какой-то метод, но и так чуть н запуталась в локаторах и ничего не родила(
     public static void main(String[] args) {
         WebDriver driver = DriverInit.setUpDriver();
         driver.get(Urls.google);
@@ -78,7 +79,7 @@ public class AutomationWithGoogle {
         }
 
         driver.findElement(Locators.guinnessLastNameField).sendKeys("Kolomiets");
-        driver.findElement(Locators.guinnessNameField).sendKeys("Katrin");
+        driver.findElement(Locators.guinnessNameField).sendKeys("Katarina");
         driver.findElement(Locators.birthDayField).sendKeys("31");
         driver.findElement(Locators.birthMonthField).sendKeys("12");
         driver.findElement(Locators.birthYearField).sendKeys("1997");
@@ -92,13 +93,30 @@ public class AutomationWithGoogle {
         actions.keyDown(Keys.ENTER).keyUp(Keys.ENTER).build().perform();
         System.out.println(wait.until(ExpectedConditions.visibilityOfElementLocated(Locators.validationPassword)).getText());
 
-        for (String window : windowHandles) {
-            if (!window.equals(mainWindow)) {
+//        for (String window : windowHandles) {
+//            if (!window.equals(mainWindow)) {
                 driver.switchTo().window(windowHandles.get(2));
-                if (driver.getCurrentUrl().contains(Urls.alertsDemo)) {
-                    break;
-                }
-            }
-        }
+//                if (driver.getCurrentUrl().contains(Urls.alertsDemo)) {
+//                    break;
+//                }
+//            }
+//        }
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(Locators.alertButton)).click();
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.accept();
+        System.out.println(wait.until(ExpectedConditions.visibilityOfElementLocated(Locators.outputField)).getText());
+        wait.until(ExpectedConditions.elementToBeClickable(Locators.confirmButton)).click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        alert.dismiss();
+        System.out.println(wait.until(ExpectedConditions.visibilityOfElementLocated(Locators.outputField)).getText());
+        //Почему-то после этого момента в основном тест падает и выбивает ElementClickInterceptedException
+        //Бывает и выше на одной из трех кнопок
+        wait.until(ExpectedConditions.elementToBeClickable(Locators.promptButton)).click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        alert.sendKeys("Final step of this task");
+        alert.accept();
+        System.out.println(wait.until(ExpectedConditions.visibilityOfElementLocated(Locators.outputField)).getText());
+        driver.quit();
     }
 }
